@@ -1,4 +1,5 @@
 import type { Habit, HabitLog, PlantStage } from '../types/grove';
+import groveData from '../data/groveData.json';
 
 export function toLocalDateKey(date: Date = new Date()): string {
   const year = date.getFullYear();
@@ -26,11 +27,11 @@ export function formatShortDate(dateKey: string): string {
 }
 
 export const PLANT_STAGE_LABELS: Record<PlantStage, string> = {
-  [-1]: 'Weeds',
-  0: 'Seed',
-  1: 'Sprout',
-  2: 'Sapling',
-  3: 'Bloom',
+  [-1]: groveData.plantStageLabels.weeds,
+  0: groveData.plantStageLabels.seed,
+  1: groveData.plantStageLabels.sprout,
+  2: groveData.plantStageLabels.sapling,
+  3: groveData.plantStageLabels.bloom,
 };
 
 export interface EvaluatedPlantState {
@@ -176,64 +177,28 @@ export interface GroveBadge {
 }
 
 export function getGroveBadges(habits: Habit[], logs: HabitLog[]): GroveBadge[] {
-  const totalCompleted = logs.filter((l) => l.watered).length;
-  const bestStreak = habits.reduce(
-    (max, h) => Math.max(max, evaluatePlantState(h, logs).streak),
-    0
-  );
-  const saplingPlusCount = habits.filter((h) => evaluatePlantState(h, logs).stage >= 2).length;
-  const bloomCount = habits.filter((h) => evaluatePlantState(h, logs).stage === 3).length;
+  const metrics = {
+    totalCompleted: logs.filter((l) => l.watered).length,
+    bestStreak: habits.reduce(
+      (max, h) => Math.max(max, evaluatePlantState(h, logs).streak),
+      0
+    ),
+    saplingPlusCount: habits.filter((h) => evaluatePlantState(h, logs).stage >= 2).length,
+    habitCount: habits.length,
+    bloomCount: habits.filter((h) => evaluatePlantState(h, logs).stage === 3).length,
+  };
 
-  return [
-    {
-      id: 'first_sprout',
-      label: 'First Sprout',
-      icon: 'sprout',
-      unlocked: totalCompleted >= 1,
-      current: Math.min(1, totalCompleted),
-      target: 1,
-    },
-    {
-      id: 'clear_path',
-      label: 'Clear Path',
-      icon: 'path',
-      unlocked: bestStreak >= 3,
-      current: Math.min(3, bestStreak),
-      target: 3,
-    },
-    {
-      id: 'first_sapling',
-      label: 'Sapling Care',
-      icon: 'sapling',
-      unlocked: saplingPlusCount >= 1,
-      current: Math.min(1, saplingPlusCount),
-      target: 1,
-    },
-    {
-      id: 'four_plots',
-      label: '4 Plots',
-      icon: 'plots',
-      unlocked: habits.length >= 4,
-      current: Math.min(4, habits.length),
-      target: 4,
-    },
-    {
-      id: 'first_bloom',
-      label: 'Full Bloom',
-      icon: 'bloom',
-      unlocked: bloomCount >= 1,
-      current: Math.min(1, bloomCount),
-      target: 1,
-    },
-    {
-      id: 'canopy_7',
-      label: '7-Day Canopy',
-      icon: 'canopy',
-      unlocked: bestStreak >= 7,
-      current: Math.min(7, bestStreak),
-      target: 7,
-    },
-  ];
+  return groveData.badgeDefinitions.map((badge) => {
+    const rawValue = metrics[badge.metric as keyof typeof metrics] ?? 0;
+    return {
+      id: badge.id,
+      label: badge.label,
+      icon: badge.icon as GroveBadge['icon'],
+      unlocked: rawValue >= badge.target,
+      current: Math.min(badge.target, rawValue),
+      target: badge.target,
+    };
+  });
 }
 
 export interface GrowthAnalysisPoint {

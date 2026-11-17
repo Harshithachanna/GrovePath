@@ -1,21 +1,16 @@
 import React from 'react';
 import { Lock, LogIn } from 'lucide-react';
-import type { PlantStage } from '../types/grove';
 import { PLANT_STAGE_LABELS } from '../utils/groveLogic';
 import { PlotSprite } from './PixelSprites';
 
-interface GroveGlimpseProps {
-  onOpenAuth: () => void;
-}
-
-const PREVIEW_STAGES: { stage: PlantStage; sprite: 'cherry_blossom' }[] = [
+const PREVIEW_STAGES = [
   { stage: 0, sprite: 'cherry_blossom' },
   { stage: 1, sprite: 'cherry_blossom' },
   { stage: 2, sprite: 'cherry_blossom' },
   { stage: 3, sprite: 'cherry_blossom' },
 ];
 
-export function GroveGlimpse({ onOpenAuth }: GroveGlimpseProps) {
+export function GroveGlimpse({ onOpenAuth }) {
   return (
     <section
       id="glimpse"

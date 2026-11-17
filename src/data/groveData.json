@@ -1,0 +1,17 @@
+﻿{
+  "plantStageLabels": {
+    "weeds": "Weeds",
+    "seed": "Seed",
+    "sprout": "Sprout",
+    "sapling": "Sapling",
+    "bloom": "Bloom"
+  },
+  "badgeDefinitions": [
+    { "id": "first_sprout", "label": "First Sprout", "icon": "sprout", "metric": "totalCompleted", "target": 1 },
+    { "id": "clear_path", "label": "Clear Path", "icon": "path", "metric": "bestStreak", "target": 3 },
+    { "id": "first_sapling", "label": "Sapling Care", "icon": "sapling", "metric": "saplingPlusCount", "target": 1 },
+    { "id": "four_plots", "label": "4 Plots", "icon": "plots", "metric": "habitCount", "target": 4 },
+    { "id": "first_bloom", "label": "Full Bloom", "icon": "bloom", "metric": "bloomCount", "target": 1 },
+    { "id": "canopy_7", "label": "7-Day Canopy", "icon": "canopy", "metric": "bestStreak", "target": 7 }
+  ]
+}

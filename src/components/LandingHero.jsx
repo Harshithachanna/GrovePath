@@ -1,41 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PlotSprite } from './PixelSprites';
 
-interface LandingHeroProps {
-  reducedMotion: boolean;
-}
-
 const FOLD_STRIP = [
   {
     label: 'Grow Trees',
     line: 'Water daily habits into full bloom.',
-    sprite: 'cherry_blossom' as const,
-    stage: 3 as const,
+    sprite: 'cherry_blossom',
+    stage: 3,
   },
   {
     label: 'Clear Paths',
     line: 'Stay steady to keep weeds away.',
-    sprite: 'oak_lantern' as const,
-    stage: 2 as const,
+    sprite: 'oak_lantern',
+    stage: 2,
   },
   {
     label: 'Unlock Plots',
     line: 'Fill sixteen plots with steady roots.',
-    sprite: 'wildflower_arch' as const,
-    stage: 3 as const,
+    sprite: 'wildflower_arch',
+    stage: 3,
   },
 ];
 
-export function LandingHero({ reducedMotion }: LandingHeroProps) {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const rafRef = useRef<number | null>(null);
+export function LandingHero({ reducedMotion }) {
+  const heroRef = useRef(null);
+  const rafRef = useRef(null);
   const [heroImgFailed, setHeroImgFailed] = useState(false);
   const [osReducedMotion, setOsReducedMotion] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     setOsReducedMotion(mq.matches);
-    const listener = (e: MediaQueryListEvent) => setOsReducedMotion(e.matches);
+    const listener = (e) => setOsReducedMotion(e.matches);
     mq.addEventListener('change', listener);
     return () => mq.removeEventListener('change', listener);
   }, []);
@@ -51,7 +47,7 @@ export function LandingHero({ reducedMotion }: LandingHeroProps) {
 
     if (disableTracking) return;
 
-    const updateCoords = (clientX: number, clientY: number) => {
+    const updateCoords = (clientX, clientY) => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         const rect = el.getBoundingClientRect();
@@ -62,8 +58,8 @@ export function LandingHero({ reducedMotion }: LandingHeroProps) {
       });
     };
 
-    const handleMouseMove = (e: MouseEvent) => updateCoords(e.clientX, e.clientY);
-    const handleTouchMove = (e: TouchEvent) => {
+    const handleMouseMove = (e) => updateCoords(e.clientX, e.clientY);
+    const handleTouchMove = (e) => {
       if (e.touches[0]) updateCoords(e.touches[0].clientX, e.touches[0].clientY);
     };
 
