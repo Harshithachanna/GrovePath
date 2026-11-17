@@ -18,35 +18,3 @@ Bundler & Dev Server: Vite 8
 Server & Services: Express (server.ts), Firebase / Firestore, Google Gemini API (@google/genai)
 State & Storage: Local-first persistence (localStorage)
 
-Project Structure
-
-grovepath/
-├── src/
-│   ├── components/            # Reusable UI components, sprites, and modals
-│   ├── views/                 # Primary application views (Hero, Sanctuary, Insights, Settings)
-│   ├── hooks/                 # Custom React hooks and state utilities
-│   ├── lib/                   # Firebase helpers, storage logic, and shared utilities
-│   ├── App.tsx                # Root application component
-│   └── main.tsx               # Client entry point
-├── server.ts                  # Express server entry point
-├── index.html                 # HTML document shell and font imports
-├── vite.config.ts             # Vite build and dev server configuration
-├── tsconfig.json              # TypeScript compiler configuration
-├── eslint.config.mjs          # ESLint configuration
-├── firebase-applet-config.json # Firebase client/applet configuration
-├── firebase-blueprint.json    # Firestore data model blueprint
-├── firestore.rules            # Firestore security rules
-├── security_spec.md           # Security and data handling notes
-├── .env.example               # Environment variable template (placeholders only)
-├── .gitignore                 # Ignored files, build outputs, and local secrets
-└── README.md
-
-Run Locally
-Prerequisites
-Node.js
-npm
-Environment Setup:
-npm install
-npm run dev
-Open http://localhost:3000/ in your browser.
-
