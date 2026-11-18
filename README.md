@@ -17,4 +17,12 @@ Frontend: React 19, TypeScript, Tailwind CSS v4
 Bundler & Dev Server: Vite 8
 Server & Services: Express (server.ts), Firebase / Firestore, Google Gemini API (@google/genai)
 State & Storage: Local-first persistence (localStorage)
+Prerequisites:
+Node.js
+npm 
+Environment Setup:
+ .env and fill in your local values inside
+Start the Development Server : 
+npm install
+npm run dev
 
